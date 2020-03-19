@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Coding Tips</title>
+  </head>
+
+  <body>
+    <ul>
+      <li>
+        <a href="{{ url_for('list_tips') }}">Show tips</a>
+      </li>
+      <li>
+        <a href="{{ url_for('tips_form') }}">Add new</a>
+      </li>
+    </ul>
+
+    {% block body %}
+      <div>
+        Content
+      </div>
+    {% endblock %}
+  </body>
+</html>

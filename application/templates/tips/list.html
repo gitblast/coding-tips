@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <div>
+    {% for tip in tips %}
+    <div>
+      <!-- tip user puuttuu -->
+      <div>{{ tip.content }}</div>
+      <div><i>{{ tip.add_date }}</i></div>
+      <div>Upvotes: {{ tip.likes }}</div>
+      
+      <div>Downvotes: {{ tip.dislikes }}</div>
+      <form method="POST" action="{{ url_for('like_tip', id=tip.id) }}">
+        <input type="submit" value="Like"/>
+      </form>
+      <form method="POST" action="{{ url_for('unlike_tip', id=tip.id) }}">
+        <input type="submit" value="Unike"/>
+      </form>
+      <br/>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
