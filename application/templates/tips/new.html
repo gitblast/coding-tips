@@ -2,7 +2,12 @@
   
 {% block body %}
 <form method="POST" action="{{ url_for('tips_create') }}">
-  <input type="text" name="name"/>
-  <input type="submit" value="Add a new tip"/>
+  <div>{{ form.content.label }}</div>
+  <div>{{ form.content }}</div>
+  {% for error in form.content.errors %}
+  <div>{{ error }}</div>
+  {% endfor %}
+  <input type='submit' value='Create tip'/>
+  
 </form>
 {% endblock %}

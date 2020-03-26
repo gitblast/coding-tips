@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('new_user') }}">
+    <table>
+      <tr>
+        <td>
+      {{ form.username.label }}
+        </td>
+        <td>
+      {{ form.username }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+      {{ form.email.label }}
+        </td>
+        <td>
+      {{ form.email }}
+        </td>
+        <td>
+            <ul>
+              {% for error in form.email.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+      </tr>
+      <tr>
+        <td>
+      {{ form.password.label }}
+        </td>
+        <td>
+      {{ form.password }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+      {{ form.passwordRepeat.label }}
+        </td>
+        <td>
+      {{ form.passwordRepeat }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+      <input type="submit" value="Sign up"/>
+        </td>
+      </tr>
+    </form>
+    {{ error }}
+{% endblock %}
