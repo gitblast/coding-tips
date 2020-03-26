@@ -19,9 +19,14 @@
       <li>
         <a href="{{ url_for('list_tips') }}">Show tips</a>
       </li>
+      {% if current_user.is_authenticated %}
       <li>
         <a href="{{ url_for('tips_form') }}">Add new</a>
       </li>
+        <li>
+          <a href="{{ url_for('user_tips') }}">My tips</a>
+        </li>
+      {% endif %}
     </ul>
 
     {% block body %}

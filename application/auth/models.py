@@ -10,6 +10,8 @@ class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja
     username = db.Column(db.String(30), nullable=False)
     password= db.Column(db.String(160), nullable=False)
 
+    tips = db.relationship('Tip', backref='account', lazy=True)
+
     def __init__(self, username, password, email):
         self.username = username
         self.email = email

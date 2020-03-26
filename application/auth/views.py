@@ -31,7 +31,6 @@ def auth_logout():
 @app.route("/register/", methods = ['GET', 'POST'])
 def new_user():
     if request.method == 'GET':
-        print('add new user')
         return render_template("auth/register.html", form = RegisterForm())
 
     form = RegisterForm(request.form)
@@ -47,4 +46,5 @@ def new_user():
     db.session().add(user)
     db.session().commit()
 
+    login_user(user)
     return redirect(url_for('index'))

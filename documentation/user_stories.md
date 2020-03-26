@@ -1,15 +1,21 @@
-### Käyttötapauksia (HUOM! Suurin osa toiminnallisuuksista ei vielä koodissa)
+### Käyttötapauksia (HUOM! Osa toiminnallisuuksista ei vielä koodissa)
 
 #### Kirjautumaton käyttäjä voi:
-* selata koodausvinkkejä
-* filtteröidä niitä upvotejen, tagien tai vinkin lisänneen käyttäjän perusteella
+
+* luoda uuden käyttäjätunnuksen klikkaamalla "Sign up"
+* kirjautua sisään olemassaolevilla käyttäjätunnuksilla klikkaamalla "Log in"
+* selata tietokannasta löytyviä koodausvinkkejä
+* filtteröidä vinkkejä upvotejen, tagien tai vinkin lisänneen käyttäjän perusteella
 
 #### Kirjautunut käyttäjä voi yllä olevan lisäksi:
+
 * lisätä omia koodausvinkkejä
-* upvoteta tai downvoteta muiden käyttäjien vinkkejä (maksimissaan yhden kerran per vinkki)
+* selata itse lisäämiään vinkkejä klikkaamalla "My tips"
+* upvoteta tai downvoteta muiden käyttäjien lisäämiä vinkkejä (vain yksi upvote/downvote per vinkki)
 * ehdottaa tageja sekä linkkejä muiden käyttäjien lisäämiin vinkkeihin
 
-### Vinkin omistaja (lisääjä) voi:
+#### Vinkin omistaja (lisääjä) voi:
+* muokata vinkin sisältöä
 * poistaa vinkin
 * lisätä linkkejä vinkkiin
 * lisätä tageja vinkkiin
