@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+<form method="POST" action="{{ url_for('update_tip', id=tip.id) }}">
+  <div>{{ form.content.label }}</div>
+  <div>
+    <textarea name='content'>{{ text }}</textarea>
+  </div>
+  {% for error in form.content.errors %}
+  <div>{{ error }}</div>
+  {% endfor %}
+  <input type='submit' value='Save'/>
+  
+</form>
+{% endblock %}

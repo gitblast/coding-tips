@@ -26,7 +26,11 @@ def show_tip(id):
 @app.route("/tips/<id>/delete", methods=['POST'])
 @login_required
 def delete_tip(id):
-    Tip.query.filter_by(id=id).delete()
+    tip = Tip.query.get(id)
+    if tip.account_id != current_user.id:
+        print('Error: cannot delete tips added by others')
+        return redirect(request.referrer)
+    db.session().delete(tip)
     db.session().commit()
     return redirect(request.referrer)
 
@@ -42,6 +46,30 @@ def like_tip(id):
     db.session().commit()
 
     return redirect(request.referrer)
+
+@app.route('/tips/<id>/update', methods=['GET', 'POST'])
+@login_required
+def update_tip(id):
+    tip = Tip.query.get(id)
+
+    if (request.method == 'GET'):
+        return render_template('tips/update.html', tip = tip, form = TipForm(), text = tip.content)
+
+    form = TipForm(request.form)
+    
+    if not form.validate():
+        return render_template('tips/update.html', tip = tip, form = form, text = form.content.data)
+
+    if tip.account_id != current_user.id:
+        print('Error: cannot update tips added by others')
+        return redirect(request.referrer)
+    tip.content = form.content.data
+    db.session().commit()
+
+    print('tip updated')
+
+    return redirect(url_for('user_tips'))
+
 
 @app.route('/tips/<id>/unlike', methods=['POST'])
 @login_required

@@ -11,7 +11,11 @@
       
       <div>Downvotes: {{ tip.dislikes }}</div>
       {% if current_user.id == tip.account_id %}
-      <!-- lisää edit, mutta mieti miten kannattaa toteuttaa -->
+      <form method="GET" action="{{ url_for('update_tip', id=tip.id) }}">
+        <input type="submit" value="Update"/>
+      </form>
+
+      <!-- lisää alert confirmation -->
       <form method="POST" action="{{ url_for('delete_tip', id=tip.id) }}">
         <input type="submit" value="Delete"/>
       </form>
