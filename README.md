@@ -29,7 +29,11 @@ Tällä hetkellä sovelluksessa toimii:
 
 * Vinkkien listaus, lisäys, poisto sekä upvoteaminen/downvoteaminen (näistä vain listaus onnistuu ilman kirjautumista)
 
-Tietokannasta löytyy toistaikseksi kaksi taulua, toinen vinkeille ja toinen käyttäjille.
+* Tagien listaus (ulkoasu viilaamatta)
+
+* Käyttäjien listaus, joka tosin on kesken. Käyttäjien yhteydessä näytetään tällä hetkellä käyttäjänimi, käyttäjän lisäämien vinkkien kokonaismäärä, käyttäjän vinkkien upvotejen ja downvotejen kokonaismäärä.
+
+Tietokannasta löytyy toistaikseksi neljä taulua: yksi vinkeille, yksi käyttäjille, yksi tageille sekä liitostaulu tagien ja vinkkien välillä.
 
 ### Lisätietoa
 
