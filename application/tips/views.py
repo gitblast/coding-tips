@@ -2,8 +2,11 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 
 from application import app, db
+
 from application.tips.models import Tip
 from application.tips.forms import TipForm
+
+from application.tags.models import Tag
 
 @app.route("/tips/new/")
 @login_required
@@ -90,11 +93,27 @@ def unlike_tip(id): # tulee lisätä että yks user voi lisätä vain yhen
 def tips_create():
     form = TipForm(request.form)
 
+    if (form.add_tag.data):
+        if (len(form.tag.data) < 1 or len(form.tag.data) > 20):
+            return render_template("tips/new.html", form = form, tagError = 'Tag must be between 1 and 20 characters long.')
+        form.tags.append(form.tag.data)
+        return render_template("tips/new.html", form = form)
+
     if not form.validate():
         return render_template("tips/new.html", form = form)
 
     tip = Tip(form.content.data)
     tip.account_id = current_user.id
+
+    # lisätään tietokantaan ne tagit, joita ei sieltä jo löydy, ja lisätään tagit tipin tageihin
+    for tag in form.tags:
+        dbTag = Tag.query.filter_by(content=tag).first()
+        if not dbTag:
+            t = Tag(tag)
+            t.account_id = current_user.id
+            test = db.session().add(t)
+            dbTag = Tag.query.filter_by(content=tag).first()
+        tip.tags.append(dbTag)
 
     db.session().add(tip)
     db.session().commit()

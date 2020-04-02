@@ -1,6 +1,8 @@
 from application import db
 
-class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja
+from sqlalchemy.sql import text
+
+class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja, ja refaktoroi users kansioon!
     __tablename__ = 'account'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +18,37 @@ class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja
         self.username = username
         self.email = email
         self.password = password
+
+    @staticmethod
+    def userWithMostLikes():
+        return null
+
+    @staticmethod
+    def getLikes(userId):
+        stmt = text("SELECT SUM(likes) FROM tip WHERE account_id = :id").params(id=userId)
+        res = db.engine.execute(stmt)
+
+        result = 0
+
+        for row in res:
+            if row[0]:
+                result = row[0]
+
+        return result
+
+    @staticmethod
+    def getDislikes(userId):
+        stmt = text("SELECT SUM(dislikes) FROM tip WHERE account_id = :id").params(id=userId)
+        res = db.engine.execute(stmt)
+
+        result = 0
+
+        for row in res:
+            if row[0]:
+                result = row[0]
+
+        return result
+
 
     def get_id(self):
         return self.id

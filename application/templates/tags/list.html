@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method='POST' action="{{ url_for('add_tag') }}">
+    <table>
+      <tr>
+        <td>
+      {{ form.tag.label }}
+        </td>
+        <td>
+      {{ form.tag }}
+        </td>
+        <td colspan="2">
+      <input type="submit" value="Add tag"/>
+        </td>
+      </tr>
+    </table>
+    {% for error in form.tag.errors %}
+  <div>{{ error }}</div>
+  {% endfor %}
+  </form>
+  <br/>
+  {% for tag in tags %}
+  <div>{{ tag.content }}</div>
+  <form method="POST" action="{{ url_for('delete_tag', id=tag.id) }}">
+    <input type="submit" value="Delete">
+  </form>
+  {% endfor %}
+{% endblock %}

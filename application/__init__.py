@@ -18,8 +18,13 @@ from application import views
 from application.tips import models
 from application.tips import views
 
+from application.tags import models
+from application.tags import views
+
 from application.auth import models
 from application.auth import views
+
+from application.users import views
 
 from application.auth.models import User
 app.config["SECRET_KEY"] = os.urandom(32)

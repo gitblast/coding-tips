@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Total tips</th>
+            <th scope="col">Total likes</th>
+            <th scope="col">Total dislikes</th>
+            <th scope="col">Most liked tip</th>
+          </tr>
+    </thead>
+    {% for user in users %}
+      <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.tips|length }}</td>
+        <td>{{ user.likes }}</td>
+        <td>{{ user.dislikes }}</td>
+        <td>TODO</td>
+      </tr>
+    {% endfor %}
+  </div>
+{% endblock %}
