@@ -9,7 +9,7 @@ if os.environ.get("HEROKU"):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tips.db"    
-    app.config["SQLALCHEMY_ECHO"] = True
+    #app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(app)
 
@@ -21,12 +21,11 @@ from application.tips import views
 from application.tags import models
 from application.tags import views
 
-from application.auth import models
 from application.auth import views
 
 from application.users import views
 
-from application.auth.models import User
+from application.users.models import User
 app.config["SECRET_KEY"] = os.urandom(32)
 
 from flask_login import LoginManager

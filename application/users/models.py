@@ -21,7 +21,7 @@ class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja, ja refak
 
     @staticmethod
     def userWithMostLikes():
-        return null
+        return None
 
     @staticmethod
     def getLikes(userId):
@@ -46,6 +46,19 @@ class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja, ja refak
         for row in res:
             if row[0]:
                 result = row[0]
+
+        return result
+
+    @staticmethod
+    def getMostLiked(userId):
+        stmt = text("SELECT id, content, likes FROM tip WHERE account_id = :id ORDER BY likes DESC LIMIT 1").params(id=userId)
+        res = db.engine.execute(stmt)
+
+        result = None
+
+        for row in res:
+            if (row[0] and row[1] and row[2]):
+                result = (row[0], row[1], row[2])
 
         return result
 

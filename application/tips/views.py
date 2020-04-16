@@ -15,7 +15,27 @@ def tips_form():
 
 @app.route("/tips/", methods=["get"])
 def list_tips():
-    return render_template('tips/list.html', tips = Tip.query.all())
+    tips = Tip.query.all()
+    tags = Tag.query.all()
+
+    sort = request.args.get('sort')
+    filt = request.args.get('filter')
+
+    if sort == 'likes':
+        print('sorting by likes')
+        tips.sort(key=lambda tip: tip.likes, reverse=True)
+    elif sort == 'date':
+        print('sorting by date')
+        tips.sort(key=lambda tip: tip.add_date) #jostain syystä kellonajat sorttaa väärin
+    elif sort == "dislikes":
+        print('sorting by dislikes')
+        tips.sort(key=lambda tip: tip.dislikes, reverse=True)
+
+    if filt:
+        print('filter:', filt)
+        tips = [tip for tip in tips if filt in [tag.content for tag in tip.tags]]
+
+    return render_template('tips/list.html', tips = tips, tags = tags, sort = sort, filt = filt)
 
 @app.route("/tips/my")
 @login_required
@@ -117,5 +137,7 @@ def tips_create():
 
     db.session().add(tip)
     db.session().commit()
+
+    TipForm.tags = []
   
     return redirect(url_for('list_tips'))

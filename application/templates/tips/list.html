@@ -2,6 +2,41 @@
 
 {% block body %}
   <div>
+    <div class='d-flex justify-content-between'>
+      <div>
+        <ul class="nav">
+          <li class="nav-item">
+            <span class="nav-link">Sort by:</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('list_tips', sort='date', filter=filt ) }}">Date</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('list_tips', sort='likes', filter=filt) }}">Likes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('list_tips', sort='dislikes', filter=filt) }}">Dislikes</a>
+          </li>
+        </ul>
+      </div>
+      <form class="form-inline">
+        <label for="filter">Filter by tag:</label>
+      <select class="form-control form-control-sm ml-1" id="filter" onchange="window.location = this.value">
+          {% if filt %}
+          <option value="{{ url_for('list_tips') }}">All Tags</option>
+          {% else %}
+          <option selected value="{{ url_for('list_tips') }}">All Tags</option>
+          {% endif %}
+          {% for tag in tags %}
+            {% if filt == tag.content %}
+            <option selected value="{{ url_for('list_tips', filter=tag.content, sort=sort) }}">{{ tag.content }}</option>
+            {% else %}
+            <option value="{{ url_for('list_tips', filter=tag.content, sort=sort) }}">{{ tag.content }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </form>
+    </div>
     {% for tip in tips %}
     <div class='card'>
       <div class="card-header">

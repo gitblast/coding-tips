@@ -17,7 +17,13 @@
         <td>{{ user.tips|length }}</td>
         <td>{{ user.likes }}</td>
         <td>{{ user.dislikes }}</td>
-        <td>TODO</td>
+        <td>
+          {% if user.mostLiked %}
+          <a href="{{ url_for('show_tip', id=user.mostLiked[0]) }}">{{ user.mostLiked[1][0:10] }}...</a> ({{ user.mostLiked[2] }} likes)
+          {% else %}
+          No likes yet
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </div>
