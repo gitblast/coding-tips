@@ -11,9 +11,9 @@ from application.users.models import User
 from application.links.models import Link
 
 @app.route("/tips/new/")
-#@login_required
+@login_required
 def tips_form():
-    return render_template("tips/new.html", form = TipForm())
+    return render_template("tips/new.html", form = TipForm(), text = None)
 
 @app.route("/tips/", methods=["get"])
 def list_tips():
@@ -23,7 +23,7 @@ def list_tips():
 
     # jotta filtteröinti toimis oikein, castataan stringiksi
     for u in users: 
-        u.id = str(u.id)
+        u.strid = str(u.id)
 
     sort = request.args.get('sort')
     filt = request.args.get('filter')
@@ -48,7 +48,7 @@ def list_tips():
 
     return render_template('tips/list.html', tips = tips, tags = tags, sort = sort, filt = filt, user = user, users = users)
 
-@app.route("/tips/<id>") #TODO: tee oma tarkempi näkymä
+@app.route("/tips/<id>")
 def show_tip(id):
     return render_template('tips/list.html', tips = Tip.query.filter_by(id=id))
 
@@ -81,7 +81,7 @@ def like_tip(id):
 def update_tip(id):
     tip = Tip.query.get(id)
 
-    if (request.method == 'GET'):
+        if (request.method == 'GET'):
         return render_template('tips/update.html', tip = tip, form = TipForm(), text = tip.content)
 
     form = TipForm(request.form)
@@ -128,7 +128,7 @@ def tips_create():
 
     if (form.add_link.data):
         data = form.link.data
-        if not data.startswith("http://") or data.startswith("https://") or data.startswith('www.'):
+        if not (data.startswith("http://") or data.startswith("https://") or data.startswith("www.")):
             return render_template("tips/new.html", form = form, linkError = "A valid URL is required.")
         form.links.append(form.link.data)
         form.link.data = ''

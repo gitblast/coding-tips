@@ -29,10 +29,10 @@
             <option selected value="{{ url_for('list_tips') }}">All Users</option>
             {% endif %}
             {% for u in users %}
-              {% if user == u.id %}
-              <option selected value="{{ url_for('list_tips', filter=filt, sort=sort, user=u.id) }}">{{ u.username }}</option>
+              {% if user == u.strid %}
+              <option selected value="{{ url_for('list_tips', filter=filt, sort=sort, user=u.strid) }}">{{ u.username }}</option>
               {% else %}
-              <option value="{{ url_for('list_tips', filter=filt, sort=sort, user=u.id) }}">{{ u.username }}</option>
+              <option value="{{ url_for('list_tips', filter=filt, sort=sort, user=u.strid) }}">{{ u.username }}</option>
               {% endif %}
             {% endfor %}
           </select>
@@ -105,13 +105,13 @@
       {% if tip.links %}
         <a class="card-link ml-2" id="headingOne">
           <h2>
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{tip.id}}" aria-expanded="true" aria-controls="collapseOne">
               <strong>More information</strong>
             </button>
           </h2>
         </a>
     
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapse{{ tip.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
           <ul class="list-group list-group-flush">
             {% for link in tip.links %}
             <li class="list-group-item">
