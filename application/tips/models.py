@@ -17,6 +17,8 @@ class Tip(db.Model):
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
+    links = db.relationship('Link', backref='tip', lazy=True)
+
     tags = db.relationship(
         'Tag',
         secondary=tags,

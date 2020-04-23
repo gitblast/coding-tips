@@ -21,6 +21,8 @@ from application.tips import views
 from application.tags import models
 from application.tags import views
 
+from application.links import models
+
 from application.auth import views
 
 from application.users import views

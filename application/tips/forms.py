@@ -7,7 +7,11 @@ class TipForm(FlaskForm):
     tag = StringField("Add tag:")
     add_tag = SubmitField('Add')
 
+    link = StringField("Add link:")
+    add_link = SubmitField('Add')
+
     tags = []
+    links = []
  
     class Meta:
         csrf = False

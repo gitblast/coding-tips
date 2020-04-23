@@ -8,8 +8,10 @@ from application.tips.forms import TipForm
 
 from application.tags.models import Tag
 
+from application.links.models import Link
+
 @app.route("/tips/new/")
-@login_required
+#@login_required
 def tips_form():
     return render_template("tips/new.html", form = TipForm())
 
@@ -117,6 +119,14 @@ def tips_create():
         if (len(form.tag.data) < 1 or len(form.tag.data) > 20):
             return render_template("tips/new.html", form = form, tagError = 'Tag must be between 1 and 20 characters long.')
         form.tags.append(form.tag.data)
+        form.tag.data = ''
+        return render_template("tips/new.html", form = form)
+
+    if (form.add_link.data):
+        if not form.link.data.startswith("http://") or form.link.data.startswith("https://"):
+            return render_template("tips/new.html", form = form, linkError = "A valid URL is required.")
+        form.links.append(form.link.data)
+        form.link.data = ''
         return render_template("tips/new.html", form = form)
 
     if not form.validate():
@@ -138,6 +148,18 @@ def tips_create():
     db.session().add(tip)
     db.session().commit()
 
+    # lisätään linkit tietokantaan
+    dbTip = Tip.query.filter_by(content=tip.content, account_id=current_user.id).first()
+
+    for link in form.links:
+        l = Link(link)
+        l.account_id = current_user.id
+        l.tip_id = dbTip.id
+        db.session().add(l)
+
+    db.session().commit()
+
     TipForm.tags = []
+    TipForm.links = []
   
     return redirect(url_for('list_tips'))
