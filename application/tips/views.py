@@ -76,28 +76,30 @@ def like_tip(id):
 
     return redirect(request.referrer)
 
-@app.route('/tips/<id>/update', methods=['GET', 'POST'])
-@login_required
+@app.route('/tips/<id>/update', methods=["GET"])
+#@login_required
 def update_tip(id):
     tip = Tip.query.get(id)
+    return render_template('tips/update.html', tip = tip, tags = tip.tags, links = tip.links, form = TipForm(), text = tip.content)
 
-        if (request.method == 'GET'):
-        return render_template('tips/update.html', tip = tip, form = TipForm(), text = tip.content)
-
+@app.route('/tips/<id>/update/<what>', methods=["POST"])
+#@login_required
+def update_tip_property(id, what):
+    tip = Tip.query.get(id)
     form = TipForm(request.form)
-    
-    if not form.validate():
-        return render_template('tips/update.html', tip = tip, form = form, text = form.content.data)
 
-    if tip.account_id != current_user.id:
-        print('Error: cannot update tips added by others')
-        return redirect(request.referrer)
-    tip.content = form.content.data
-    db.session().commit()
+    if what == 'text':
+        tip.content = form.content.data
+        db.session().commit()
+        updated = Tip.query.get(id)
+        return render_template('tips/update.html', tip = updated, form = form, text = tip.content, links = tip.links, tags = tip.tags)
 
-    print('tip updated')
+    #TODO: linkkien ja tagien updateeminen
+    if what == 'links':
+        return render_template('tips/update.html', tip = updated, form = form, text = tip.content, links = tip.links, tags = tip.tags)
 
-    return redirect(url_for('user_tips'))
+    if what == 'tags':
+        return render_template('tips/update.html', tip = updated, form = form, text = tip.content, links = tip.links, tags = tip.tags)
 
 
 @app.route('/tips/<id>/unlike', methods=['POST'])

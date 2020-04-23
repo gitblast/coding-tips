@@ -5,7 +5,10 @@
 * luoda uuden käyttäjätunnuksen klikkaamalla "Sign up"
 * kirjautua sisään olemassaolevilla käyttäjätunnuksilla klikkaamalla "Log in"
 * selata tietokannasta löytyviä koodausvinkkejä
-* filtteröidä vinkkejä upvotejen, tagien tai vinkin lisänneen käyttäjän perusteella
+* järjestää vinkkejä päivämäärän, likemäärän tai dislikemäärän mukaan
+* filtteröidä vinkkejä tagien tai vinkin lisänneen käyttäjän perusteella
+* selata tietokannasta löytyviä tageja (ja selata tageilla merkittyjä vinkkejä)
+* selata tietokannasta löytyviä käyttäjiä ja nähdä käyttäjiin liittyvää informaatiota (lisättyjen vinkkien määrä, tykkäykset, disliket, tykätyin vinkki)
 
 #### Kirjautunut käyttäjä voi yllä olevan lisäksi:
 

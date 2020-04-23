@@ -1,15 +1,80 @@
 {% extends "layout.html" %}
   
 {% block body %}
-<form method="POST" action="{{ url_for('update_tip', id=tip.id) }}">
-  <div>{{ form.content.label }}</div>
-  <div>
-    <textarea name='content'>{{ text }}</textarea>
-  </div>
-  {% for error in form.content.errors %}
-  <div>{{ error }}</div>
+<div class="card p-2 m-2">
+  <form method="POST" action="{{ url_for('update_tip_property', id=tip.id, what='text') }}">
+    <div>
+      <label for='content'>
+        Modify text:
+      </label>
+    </div>
+    <div>
+      <textarea name='content' class="form-control">{{ text }}</textarea>
+    </div>
+    {% for error in form.content.errors %}
+    <div>{{ error }}</div>
+    {% endfor %}
+    <div class="form-group mt-2">
+      <input class="btn btn-primary" type='submit' value='Save text'/>  
+    </div>
+  </form>
+</div>
+{% if tags %}
+<div class="card p-2 m-2">
+  <form method="POST" action="{{ url_for('update_tip_property', id=tip.id, what='tags') }}">
+    <div>
+      <label for='content'>
+        Modify tags:
+      </label>
+    </div>
+    <div class='d-flex'>
+      {% for tag in tags %}
+      <span class="badge badge-info mr-1">
+        {{ tag.content }}
+      </span>
+      {% endfor %}
+    </div>
+    {% for error in form.tag.errors %}
+    <div>{{ error }}</div>
+    {% endfor %}
+    <div class="form-group form-inline mt-3">
+      {{ form.tag.label }}
+      {{ form.tag(class_='form-control mx-sm-3' ) }}
+      {{ form.add_tag(class_='btn btn-primary') }}
+      <small class="text-danger ml-2">
+        {{ tagError }}
+      </small>
+    </div>
+    <div class="form-group mt-2">
+      <input class="btn btn-primary" type='submit' value='Save tags'/>  
+    </div>
+    
+  </form>
+</div>
+{% endif %}
+{% if links %}
+<div class="card p-2 m-2">
+<form method="POST" action="{{ url_for('update_tip_property', id=tip.id, what='links') }}">
+  <ul class="list-group list-group-flush">
+    {% for link in form.links %}
+      <li class="list-group-item">
+        <a href="{{ link }}">{{ link }}</a>
+      </li>
   {% endfor %}
-  <input type='submit' value='Save'/>
-  
+  </ul>
+  <div class="form-group form-inline mt-3">
+    {{ form.link.label }}
+    {{ form.link(class_='form-control mx-sm-3' ) }}
+    {{ form.add_link(class_='btn btn-primary') }}
+    <small class="text-danger ml-2">
+      {{ linkError }}
+    </small>
+  </div>
+  <div class="form-group mt-2">
+    <input class="btn btn-primary" type='submit' value='Save links'/>  
+  </div>
 </form>
+</div>
+
+{% endif %}
 {% endblock %}
