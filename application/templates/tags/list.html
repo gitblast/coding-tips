@@ -1,29 +1,39 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<form method='POST' action="{{ url_for('add_tag') }}">
-    <table>
+  <div class="d-flex m-5 justify-content-around">
+      <div>
+        <strong class="card-title">Tag with most tips:</strong>
+        <a href="{{ url_for('list_tips', filter = mostTips.content) }}">{{ mostTips.content }}</a> <span>({{ mostTips.tips|length }} tips)</span>
+      </div>
+      <div>
+        <strong class="card-title">Tag with most likes:</strong>
+        <a href="{{ url_for('list_tips', filter = mostLikes.content) }}">{{ mostLikes.content }}</a> <span>({{ mostLikes.likes }} likes)</span>
+      </div>
+    
+  </div>
+  <table class="table text-center">
+    <thead>
       <tr>
-        <td>
-      {{ form.tag.label }}
-        </td>
-        <td>
-      {{ form.tag }}
-        </td>
-        <td colspan="2">
-      <input type="submit" value="Add tag"/>
-        </td>
+        <th scope="col">Tag</th>
+        <th scope="col">Amount of tips</th>
+        <th scope="col">Most liked tip with tag</th>
       </tr>
-    </table>
-    {% for error in form.tag.errors %}
-  <div>{{ error }}</div>
-  {% endfor %}
-  </form>
-  <br/>
-  {% for tag in tags %}
-  <div>{{ tag.content }}</div>
-  <form method="POST" action="{{ url_for('delete_tag', id=tag.id) }}">
-    <input type="submit" value="Delete">
-  </form>
-  {% endfor %}
+    </thead>
+    <tbody>
+      {% for tag in tags %}
+        <tr>
+          <td><a href="{{ url_for('list_tips', filter=tag.content) }}">{{ tag.content }}</a></td>
+          <td>{{ tag.tips|length }}</td>
+          <td>
+            {% if tag.mostLiked %}
+          <a href="{{ url_for('show_tip', id=tag.mostLiked.id) }}">{{ tag.mostLiked.content[0:10] }}...</a> ({{ tag.mostLiked.likes }} likes)
+          {% else %}
+          No tips with tag
+          {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

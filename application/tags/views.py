@@ -1,39 +1,31 @@
 from application import app, db
 
 from application.tags.models import Tag
-from application.tags.forms import TagForm
 
-from flask import redirect, request, render_template
-from flask_login import current_user, login_required
+from flask import request, render_template
 
 @app.route('/tags/', methods=['GET'])
 def list_tags():
-    return render_template('tags/list.html', form = TagForm(), tags = Tag.query.all())
+    tags = Tag.query.all()
+    mostTips = None
+    mostLikes = None
 
-@app.route('/tags/', methods=['POST'])
-@login_required
-def add_tag():
-    form = TagForm(request.form)
+    for tag in tags:
+        if not mostTips or len(tag.tips) > len(mostTips.tips):
+            mostTips = tag
 
-    if not form.validate():
-        return render_template('tags/list.html', form = form)
+        likes = 0
 
-    tag = Tag(form.tag.data)
-    tag.account_id = current_user.id
+        mostLiked = None
+        for tip in tag.tips:
+            likes = likes + tip.likes
+            if not mostLiked or tip.likes > mostLiked.likes:
+                mostLiked = tip
+        tag.mostLiked = mostLiked
 
-    db.session().add(tag)
-    db.session().commit()
+        if not mostLikes or likes > mostLikes.likes:
+            mostLikes = tag
+            mostLikes.likes = likes
 
-    return redirect(request.referrer)
-
-@app.route('/tags/<id>', methods=['POST'])
-@login_required
-def delete_tag(id):
-    tag = Tag.query.get(id)
-
-    if tag.account_id != current_user.id:
-        print('Error: cannot delete tags added by others')
-        return redirect(request.referrer)
-    db.session().delete(tag)
-    db.session().commit()
-    return redirect(request.referrer)
+    
+    return render_template('tags/list.html', tags = tags, mostTips = mostTips, mostLikes = mostLikes)

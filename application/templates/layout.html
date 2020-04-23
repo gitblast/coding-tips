@@ -37,7 +37,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{{ url_for('tips_form') }}">Add new tip</a>
-          <a class="dropdown-item" href="{{ url_for('user_tips') }}">My tips</a>
+          <a class="dropdown-item" href="{{ url_for('list_tips', user=current_user.id) }}">My tips</a>
           <a class="dropdown-item" href="{{ url_for('auth_logout') }}">Log out</a>
         </div>
       </li>

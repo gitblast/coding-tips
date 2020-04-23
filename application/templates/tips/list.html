@@ -9,36 +9,55 @@
             <span class="nav-link">Sort by:</span>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('list_tips', sort='date', filter=filt ) }}">Date</a>
+            <a class="nav-link active" href="{{ url_for('list_tips', sort='date', filter=filt, user=user ) }}">Date</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('list_tips', sort='likes', filter=filt) }}">Likes</a>
+            <a class="nav-link" href="{{ url_for('list_tips', sort='likes', filter=filt, user=user) }}">Likes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('list_tips', sort='dislikes', filter=filt) }}">Dislikes</a>
+            <a class="nav-link" href="{{ url_for('list_tips', sort='dislikes', filter=filt, user=user) }}">Dislikes</a>
           </li>
         </ul>
       </div>
-      <form class="form-inline">
-        <label for="filter">Filter by tag:</label>
-      <select class="form-control form-control-sm ml-1" id="filter" onchange="window.location = this.value">
-          {% if filt %}
-          <option value="{{ url_for('list_tips') }}">All Tags</option>
-          {% else %}
-          <option selected value="{{ url_for('list_tips') }}">All Tags</option>
-          {% endif %}
-          {% for tag in tags %}
-            {% if filt == tag.content %}
-            <option selected value="{{ url_for('list_tips', filter=tag.content, sort=sort) }}">{{ tag.content }}</option>
+      <div class="d-flex">
+        <form class="form-inline">
+          <label for="user">Filter by user:</label>
+        <select class="form-control form-control-sm ml-1" id="user" onchange="window.location = this.value">
+            {% if user %}
+            <option value="{{ url_for('list_tips') }}">All Users</option>
             {% else %}
-            <option value="{{ url_for('list_tips', filter=tag.content, sort=sort) }}">{{ tag.content }}</option>
+            <option selected value="{{ url_for('list_tips') }}">All Users</option>
             {% endif %}
-          {% endfor %}
-        </select>
-      </form>
+            {% for u in users %}
+              {% if user == u.id %}
+              <option selected value="{{ url_for('list_tips', filter=filt, sort=sort, user=u.id) }}">{{ u.username }}</option>
+              {% else %}
+              <option value="{{ url_for('list_tips', filter=filt, sort=sort, user=u.id) }}">{{ u.username }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </form>
+        <form class="form-inline ml-2">
+          <label for="filter">Filter by tag:</label>
+        <select class="form-control form-control-sm ml-1" id="filter" onchange="window.location = this.value">
+            {% if filt %}
+            <option value="{{ url_for('list_tips') }}">All Tags</option>
+            {% else %}
+            <option selected value="{{ url_for('list_tips') }}">All Tags</option>
+            {% endif %}
+            {% for tag in tags %}
+              {% if filt == tag.content %}
+              <option selected value="{{ url_for('list_tips', filter=tag.content, sort=sort, user=user) }}">{{ tag.content }}</option>
+              {% else %}
+              <option value="{{ url_for('list_tips', filter=tag.content, sort=sort, user=user) }}">{{ tag.content }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </form>
+      </div>
     </div>
     {% for tip in tips %}
-    <div class='card'>
+    <div class='card mb-2'>
       <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex">
@@ -59,7 +78,7 @@
         
         <div>
           {% for tag in tip.tags %}
-          <span class="badge badge-info">{{ tag.content }}</span>
+          <a href="{{ url_for('list_tips', filter=tag.content) }}"><span class="badge badge-info">{{ tag.content }}</span></a>
           {% endfor %}
         </div>
         <div class="text-dark float-right">{{ tip.add_date }}</div>
@@ -83,6 +102,25 @@
       </div>
       {% endif %}
       </div>
+      {% if tip.links %}
+        <a class="card-link ml-2" id="headingOne">
+          <h2>
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <strong>More information</strong>
+            </button>
+          </h2>
+        </a>
+    
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <ul class="list-group list-group-flush">
+            {% for link in tip.links %}
+            <li class="list-group-item">
+              <a href="{{ link.url }}">{{ link.url }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
   </div>
