@@ -35,12 +35,16 @@ def new_user():
 
     form = RegisterForm(request.form)
 
-    # TODO: passwordien tulee olla samat molemmissa kentissä
     if not form.validate():
         print('validation error adding user')
         return render_template('auth/register.html', form = form, error = 'Sign up failed')
 
-    # TODO: passwordhash
+    users = User.query.all()
+
+    for u in users:
+        if u.username == form.username.data:            
+            return render_template('auth/register.html', form = form, error = 'Sign up failed', uniqueError = 'Username already in use')
+
     user = User(form.username.data, form.password.data, form.email.data)
     
     db.session().add(user)

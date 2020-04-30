@@ -6,7 +6,14 @@ Web-sovellus, johon käyttäjät voivat lisätä lyhyitä ja ytimekkäitä kooda
 
 https://coding-tips.herokuapp.com/
 
-### Käyttäjätunnukset testaamista varten:
+### Käyttäjätunnukset testaamiseen:
+
+#### Tavallinen käyttäjä:
+
+* username: user
+* password: password
+
+#### Ylläpitäjä:
 
 * username: admin
 * password: admin123
@@ -15,7 +22,7 @@ https://coding-tips.herokuapp.com/
 
 Vain kirjautuneet käyttäjät voivat lisätä vinkkejä. Vinkkeihin voi lisätä tageja, jotka kertovat aihepiirit mihin kyseinen vinkki liittyy (esim. testaaminen, javascript, yms.) sekä linkkejä ulkoisille nettisivuille lisätiedon etsimistä varten. Idea on, että itse vinkit olisivat lyhyehköjä, ja vinkkeihin lisättyjen linkkien avulla voi halutessaan etsiä lisätietoa. Linkit voivat johtaa esimerkiksi aiheeseen liittyviin postauksiin stackoverflowssa, opetusvideoihin youtubessa tai muuta vastaavaa.
 
-Lisäksi käyttäjät voivat merkitä yksittäisen vinkin joko hyödylliseksi tai hyödyttömäksi (käytännössä like / dislike).
+Lisäksi käyttäjät voivat merkitä yksittäisen vinkin joko hyödylliseksi tai hyödyttömäksi (like / dislike).
 
 Käyttäjät voivat hakea vinkkejä joko sisällön, tagien, tykkäyksien tai lisääjän perusteella.
 

@@ -17,10 +17,16 @@
 * upvoteta tai downvoteta muiden käyttäjien lisäämiä vinkkejä
 
 #### Vinkin omistaja (lisääjä) voi:
+
 * muokata vinkin sisältöä
 * poistaa vinkin
 * lisätä linkkejä vinkkiin
 * lisätä tageja vinkkiin
+
+#### Järjestelmän ylläpitäjä (admin) voi:
+
+* poistaa kenen tahansa lisäämiä vinkkejä
+* tehdä tavallisesta käyttäjästä adminin
 
 #### Ideoita jatkokehitykseen:
 

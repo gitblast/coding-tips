@@ -67,3 +67,11 @@ Tämä onnistuu klikkaamalla vinkin alareunasta löytyvää "Delete" -nappia. Po
 Kirjatunut käyttäjä voi myös lisätä likejä tai dislikejä muiden käyttäjien lisäämiin vinkkeihin.
 
 Tämä tapahtuu Tips -sivulla klikkaamalla vinkin yläpuolella olevia nuoli-ikoneita. Vihreä nuoli ylöspäin lisää liken, punainen nuoli alaspäin disliken.
+
+### Ylläpitäjän toiminnot:
+
+Järjestelmän ylläpitäjä (admin) voi poistaa kenen tahansa lisäämän vinkin. Tämä tapahtuu samalla tavalla kuin tavallisellakin käyttäjällä, eli klikkaamalla "Delete" vinkin alareunassa.
+
+Lisäksi ylläpitäjä voi tehdä muista käyttäjistä ylläpitäjiä.
+
+Tämä onnistuu menemällä sivulle Users, ja klikkaamalla käyttäjän nimen oikealla puolella olevaa "Make admin" -painiketta.
