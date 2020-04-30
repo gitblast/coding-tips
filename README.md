@@ -28,10 +28,10 @@ Käyttäjät voivat hakea vinkkejä joko sisällön, tagien, tykkäyksien tai li
 
 ### Lisätietoa
 
-[Käyttöohje LISÄÄ LINK]
+[Käyttöohje](https://github.com/gitblast/coding-tips/blob/master/documentation/user_manual.md)
 
 [Käyttötapaukset](https://github.com/gitblast/coding-tips/blob/master/documentation/user_stories.md)
 
-[Asennusohjeet LISÄÄ LINK]
+[Asennusohjeet](https://github.com/gitblast/coding-tips/blob/master/documentation/install_manual.md)
 
-[Tietokannan rakenne](https://github.com/gitblast/coding-tips/blob/master/documentation/sqlchart.png)
+[Tietokannan rakenne](https://github.com/gitblast/coding-tips/blob/master/documentation/sql_chart_final.png)
