@@ -111,18 +111,21 @@
             {% endif %}
           </cite></footer>
         </blockquote>
-        {% if current_user.id == tip.account_id %}
+
       <div class="d-flex mt-2">
+        {% if current_user.id == tip.account_id %}
         <form method="GET" action="{{ url_for('update_tip', id=tip.id) }}">
           <button class="btn btn-primary" type="submit">Update</button>
-        </form>
-  
-        <!-- lisää alert confirmation -->
-        <form method="POST" action="{{ url_for('delete_tip', id=tip.id) }}">
-          <button class="btn btn-danger" type="submit">Delete</button>
-        </form>
-      </div>
+        </form>  
+        
       {% endif %}
+      {% if current_user.isAdmin or current_user.id == tip.account_id %}
+      <form method="POST" action="{{ url_for('delete_tip', id=tip.id) }}">
+        <button class="btn btn-danger" type="submit">Delete</button>
+      </form>
+      {% endif %}
+
+    </div>
       </div>
       {% if tip.links %}
         <a class="card-link ml-2" id="headingOne">

@@ -1,7 +1,8 @@
-from application import app
+from application import app, db
 
 from application.users.models import User
-from flask import render_template
+from flask import render_template, request, url_for, redirect
+from flask_login import login_required, current_user
 
 @app.route("/users/")
 def list_users():
@@ -22,3 +23,17 @@ def list_users():
             mostDislikes = user
         user.mostLiked = user.getMostLiked(user.id)
     return render_template('users/list.html', users = users, mostTips = mostTips, mostLikes = mostLikes, mostDislikes = mostDislikes)
+
+
+@app.route("/users/<id>/upgrade", methods=['POST'])
+@login_required
+def make_admin(id):
+    if not current_user.isAdmin:
+        return redirect(request.referrer)
+    
+    user = User.query.get(id)
+    user.isAdmin = True
+
+    db.session().commit()
+
+    return redirect(request.referrer)

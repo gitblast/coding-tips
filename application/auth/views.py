@@ -20,7 +20,7 @@ def auth_login():
         return render_template("auth/loginform.html", form = form, error = "Invalid username or password")
 
     login_user(user)
-    print('Login succesful for username:', user.username)
+    print('Login succesful for username:', user.username, "user is admin: ", user.isAdmin)
     return redirect(url_for('index'))
 
 @app.route("/auth/logout")

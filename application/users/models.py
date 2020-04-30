@@ -2,7 +2,7 @@ from application import db
 
 from sqlalchemy.sql import text
 
-class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja, ja refaktoroi users kansioon!
+class User(db.Model):
     __tablename__ = 'account'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -11,6 +11,7 @@ class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja, ja refak
     email = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(30), nullable=False)
     password= db.Column(db.String(160), nullable=False)
+    isAdmin = db.Column(db.Boolean, default=False)
 
     tips = db.relationship('Tip', backref='account', lazy=True)
 

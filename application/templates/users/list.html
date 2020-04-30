@@ -29,7 +29,23 @@
     <tbody>
       {% for user in users %}
       <tr>
-        <td>{{ user.username }}</td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <div>
+              {{ user.username }}
+            {% if user.isAdmin %}
+              <small class="text-muted">(admin)</small>
+            {% endif %}
+            </div>
+            {% if current_user.isAdmin and not user.isAdmin %}
+              <form class="ml-2" method="POST" action="{{ url_for('make_admin', id=user.id) }}">
+                <button type="submit" class="btn btn-outline-primary btn-sm">
+                  Make admin
+                </button>
+              </form>
+            {% endif %}
+          </div>
+        </td>
         <td><a href="{{ url_for('list_tips', user=user.id) }}">{{ user.tips|length }}</a></td>
         <td>{{ user.likes }}</td>
         <td>{{ user.dislikes }}</td>

@@ -21,7 +21,6 @@ def list_tips():
     tags = Tag.query.all()
     users = User.query.all()
 
-    # jotta filtteröinti toimis oikein, castataan stringiksi
     for u in users: 
         u.strid = str(u.id)
 
@@ -37,7 +36,7 @@ def list_tips():
         tips.sort(key=lambda tip: tip.likes, reverse=True)
     elif sort == 'date':
         print('sorting by date')
-        tips.sort(key=lambda tip: tip.add_date) #jostain syystä kellonajat sorttaa väärin
+        tips.sort(key=lambda tip: tip.add_date)
     elif sort == "dislikes":
         print('sorting by dislikes')
         tips.sort(key=lambda tip: tip.dislikes, reverse=True)
@@ -56,10 +55,10 @@ def show_tip(id):
 @login_required
 def delete_tip(id):
     tip = Tip.query.get(id)
-    if tip.account_id != current_user.id:
-        print('Error: cannot delete tips added by others')
+    if tip.account_id != current_user.id and not current_user.isAdmin:
+        print('Error: cannot delete tips added by others unless admin')
         return redirect(request.referrer)
-    db.session().delete(tip)
+    db.session.delete(tip)
     db.session().commit()
     return redirect(request.referrer)
 
@@ -77,7 +76,7 @@ def like_tip(id):
     return redirect(request.referrer)
 
 @app.route('/tips/<id>/update', methods=["GET"])
-#@login_required
+@login_required
 def update_tip(id):
     tip = Tip.query.get(id)
     form = TipForm()
@@ -86,7 +85,7 @@ def update_tip(id):
     return render_template('tips/update.html', tip = tip, form = form, text = tip.content)
 
 @app.route('/tips/<id>/update/<what>', methods=["POST"])
-#@login_required
+@login_required
 def update_tip_property(id, what):
     tip = Tip.query.get(id)
     form = TipForm(request.form)
@@ -165,7 +164,7 @@ def update_tip_property(id, what):
 
 @app.route('/tips/<id>/unlike', methods=['POST'])
 @login_required
-def unlike_tip(id): # tulee lisätä että yks user voi lisätä vain yhen
+def unlike_tip(id):
     tip = Tip.query.get(id)
     if (tip.account_id == current_user.id):
         print("Error: can't like/unlike your own tip")
@@ -203,7 +202,6 @@ def tips_create():
     tip = Tip(form.content.data)
     tip.account_id = current_user.id
 
-    # lisätään tietokantaan ne tagit, joita ei sieltä jo löydy, ja lisätään tagit tipin tageihin
     for tag in form.tags:
         dbTag = Tag.query.filter_by(content=tag).first()
         if not dbTag:
@@ -215,8 +213,7 @@ def tips_create():
 
     db.session().add(tip)
     db.session().commit()
-
-    # lisätään linkit tietokantaan
+    
     dbTip = Tip.query.filter_by(content=tip.content, account_id=current_user.id).first()
 
     for link in form.links:

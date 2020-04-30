@@ -1,4 +1,4 @@
-### Käyttötapauksia (HUOM! Osa toiminnallisuuksista ei vielä koodissa)
+### Käyttötapauksia
 
 #### Kirjautumaton käyttäjä voi:
 
@@ -14,12 +14,15 @@
 
 * lisätä omia koodausvinkkejä
 * selata itse lisäämiään vinkkejä klikkaamalla "My tips"
-* upvoteta tai downvoteta muiden käyttäjien lisäämiä vinkkejä (vain yksi upvote/downvote per vinkki)
-* ehdottaa tageja sekä linkkejä muiden käyttäjien lisäämiin vinkkeihin
+* upvoteta tai downvoteta muiden käyttäjien lisäämiä vinkkejä
 
 #### Vinkin omistaja (lisääjä) voi:
 * muokata vinkin sisältöä
 * poistaa vinkin
 * lisätä linkkejä vinkkiin
 * lisätä tageja vinkkiin
-* hyväksyä muiden käyttäjien ehdottamia linkkejä ja tageja
+
+#### Ideoita jatkokehitykseen:
+
+* Käyttäjä voi liketä/disliketä yhtä vinkkiä vain kerran
+* Käyttäjä voi ehdottaa tageja sekä linkkejä muiden käyttäjien lisäämiin vinkkeihin, ja vinkin lisääjä hyväksyä tai hylätä ehdotukset

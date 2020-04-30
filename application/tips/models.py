@@ -8,7 +8,7 @@ tags = db.Table('tip_tags',
 )
 
 class Tip(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     add_date = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), 
         onupdate=db.func.current_timestamp())
