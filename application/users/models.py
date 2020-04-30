@@ -62,6 +62,15 @@ class User(db.Model): #TODO: hashaa passwordit ja lisää validointeja, ja refak
 
         return result
 
+    @staticmethod
+    def count():
+        stmt = text("SELECT COUNT(*) FROM account")
+        res = db.engine.execute(stmt)
+
+        for row in res:
+            return row[0]
+
+        return None
 
     def get_id(self):
         return self.id

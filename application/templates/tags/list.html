@@ -29,7 +29,7 @@
             {% if tag.mostLiked %}
           <a href="{{ url_for('show_tip', id=tag.mostLiked.id) }}">{{ tag.mostLiked.content[0:10] }}...</a> ({{ tag.mostLiked.likes }} likes)
           {% else %}
-          No tips with tag
+          No tips with this tag
           {% endif %}
           </td>
         </tr>

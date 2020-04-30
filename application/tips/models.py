@@ -1,5 +1,7 @@
 from application import db
 
+from sqlalchemy.sql import text
+
 tags = db.Table('tip_tags',
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
     db.Column('tip_id', db.Integer, db.ForeignKey('tip.id'), primary_key=True)
@@ -25,6 +27,17 @@ class Tip(db.Model):
         lazy='subquery',
         backref=db.backref('tips', lazy=True)
     )
+
+    @staticmethod
+    def count():
+        stmt = text("SELECT COUNT(*) from tip")
+        res = db.engine.execute(stmt)
+
+        for row in res:
+            return row[0]
+
+        return None
+
 
     def __init__(self, content):
         self.content = content

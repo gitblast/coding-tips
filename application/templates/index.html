@@ -6,7 +6,29 @@
     <h1 class="display-4">Coding Tips</h1>
     <p class="lead">A site where you can add, browse, upvote and downvote short coding tips.</p>
     <hr class="my-4">
-    <p>Most of the functionalities are still under construction.</p>
+    <div class="d-flex justify-content-around">
+      <div class="card">
+        <div class="card-body">
+          <strong class="card-title">
+            Total tips: {{ tips }}
+          </strong>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <strong class="card-title">
+            Total tags: {{ tags }}
+          </strong>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <strong class="card-title">
+            Total users: {{ users }}
+          </strong>
+        </div>
+      </div>
+    </div>
   </div>
 
 {% endblock %}

@@ -1,6 +1,15 @@
 {% extends "layout.html" %}
 
 {% block body %}
+  {% if current_user.is_authenticated %}
+    <div class="ml-auto">
+      <a href="{{ url_for('tips_form') }}">
+        <button class="btn btn-primary">
+          Add new tip
+        </button>
+      </a>
+    </div>
+  {% endif %}
   <div>
     <div class='d-flex justify-content-between'>
       <div>
