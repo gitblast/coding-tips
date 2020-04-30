@@ -17,9 +17,11 @@
     <div class="form-group mt-2">
       <input class="btn btn-primary" type='submit' value='Save text'/>  
     </div>
+    <small class="text-success">
+      {{ text_msg }}
+    </small>
   </form>
 </div>
-{% if tags %}
 <div class="card p-2 m-2">
   <form method="POST" action="{{ url_for('update_tip_property', id=tip.id, what='tags') }}">
     <div>
@@ -28,10 +30,11 @@
       </label>
     </div>
     <div class='d-flex'>
-      {% for tag in tags %}
-      <span class="badge badge-info mr-1">
-        {{ tag.content }}
-      </span>
+      {% for tag in form.tags %}
+        <span class="badge badge-info mr-1">
+
+        {{ tag }}
+        </span>
       {% endfor %}
     </div>
     {% for error in form.tag.errors %}
@@ -48,11 +51,12 @@
     <div class="form-group mt-2">
       <input class="btn btn-primary" type='submit' value='Save tags'/>  
     </div>
+    <small class="text-success">
+      {{ tag_msg }}
+    </small>
     
   </form>
 </div>
-{% endif %}
-{% if links %}
 <div class="card p-2 m-2">
 <form method="POST" action="{{ url_for('update_tip_property', id=tip.id, what='links') }}">
   <ul class="list-group list-group-flush">
@@ -73,8 +77,10 @@
   <div class="form-group mt-2">
     <input class="btn btn-primary" type='submit' value='Save links'/>  
   </div>
+  <small class="text-success">
+    {{ link_msg }}
+  </small>
 </form>
 </div>
 
-{% endif %}
 {% endblock %}

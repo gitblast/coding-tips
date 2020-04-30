@@ -2,7 +2,7 @@ from application import app, db
 
 from application.tags.models import Tag
 
-from flask import request, render_template
+from flask import render_template
 
 @app.route('/tags/', methods=['GET'])
 def list_tags():

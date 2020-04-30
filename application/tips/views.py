@@ -80,26 +80,87 @@ def like_tip(id):
 #@login_required
 def update_tip(id):
     tip = Tip.query.get(id)
-    return render_template('tips/update.html', tip = tip, tags = tip.tags, links = tip.links, form = TipForm(), text = tip.content)
+    form = TipForm()
+    form.tags = list(map(lambda tag: tag.content, tip.tags))
+    form.links = list(map(lambda link: link.url, tip.links))
+    return render_template('tips/update.html', tip = tip, form = form, text = tip.content)
 
 @app.route('/tips/<id>/update/<what>', methods=["POST"])
 #@login_required
 def update_tip_property(id, what):
     tip = Tip.query.get(id)
     form = TipForm(request.form)
-
+    
     if what == 'text':
         tip.content = form.content.data
         db.session().commit()
         updated = Tip.query.get(id)
-        return render_template('tips/update.html', tip = updated, form = form, text = tip.content, links = tip.links, tags = tip.tags)
+        form.tags = list(map(lambda tag: tag.content, tip.tags))
+        form.links = list(map(lambda link: link.url, tip.links))
+        return render_template('tips/update.html', tip = updated, form = form, text = updated.content, text_msg = "Tip content updated succesfully")
 
-    #TODO: linkkien ja tagien updateeminen
     if what == 'links':
-        return render_template('tips/update.html', tip = updated, form = form, text = tip.content, links = tip.links, tags = tip.tags)
+        for tag in tip.tags:
+            if tag.content not in form.tags:
+                form.tags.append(tag.content)
+        for link in tip.links:
+            if link.url not in form.links:
+                form.links.append(link.url)
+        if (form.add_link.data):
+            data = form.link.data
+            if not (data.startswith("http://") or data.startswith("https://") or data.startswith("www.")):
+                return render_template("tips/update.html", tip = tip, form = form, text = tip.content, linkError = "A valid URL is required.")
+            if data in form.links:
+                return render_template("tips/update.html", tip = tip, form = form, text = tip.content, linkError = "No duplicate links allowed.")
+            form.links.append(form.link.data)
+            form.link.data = ''
+            return render_template("tips/update.html", form = form, tip = tip, text = tip.content)
+
+        for link in form.links:
+            l = Link(link)
+            l.account_id = current_user.id
+            l.tip_id = tip.id
+            db.session().add(l)
+
+        db.session().commit()
+
+        updated = Tip.query.get(id)
+
+        return render_template('tips/update.html', tip = updated, form = form, text = tip.content, link_msg = "Links updated successfully")
 
     if what == 'tags':
-        return render_template('tips/update.html', tip = updated, form = form, text = tip.content, links = tip.links, tags = tip.tags)
+        for link in tip.links:
+            if link.url not in form.links:
+                form.links.append(link.url)
+        for tag in tip.tags:
+            if tag.content not in form.tags:
+                form.tags.append(tag.content)
+        if (form.add_tag.data):
+            if (len(form.tag.data) < 1 or len(form.tag.data) > 20):
+                return render_template("tips/update.html", tip = tip, text = tip.content, form = form, tagError = 'Tag must be between 1 and 20 characters long.')
+            if tag in form.tags:
+                return render_template("tips/update.html", tip = tip, text = tip.content, form = form, tagError = 'No duplicate tags allowed')
+            
+            form.tags.append(form.tag.data)
+            form.tag.data = ''
+            return render_template('tips/update.html', tip = tip, form = form, text = tip.content)
+
+        for tag in form.tags:
+            if tag not in list(map(lambda t: t.content, tip.tags)):
+                dbTag = Tag.query.filter_by(content=tag).first()
+                if not dbTag:
+                    t = Tag(tag)
+                    t.account_id = current_user.id
+                    test = db.session().add(t)
+                    dbTag = Tag.query.filter_by(content=tag).first()
+                tip.tags.append(dbTag)
+
+        db.session().add(tip)
+        db.session().commit()
+
+        updated = Tip.query.get(id)
+            
+        return render_template('tips/update.html', tip = updated, form = form, text = updated.content, tag_msg = "Tags updated succesfully")
 
 
 @app.route('/tips/<id>/unlike', methods=['POST'])
